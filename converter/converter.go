@@ -2,23 +2,21 @@ package converter
 
 import (
 	"encoding/hex"
-	"errors"
 	"fmt"
 	"github.com/signavio/plantuml-converter/cmd"
+	"io/ioutil"
+	"log"
 )
-
-type PlantUmlConverter interface {
-	GenerateLink() string
-	GetFiles() []PlantUmlFile
-}
 
 type PlantUml struct {
 	files []PlantUmlFile
 }
 
 type PlantUmlFile struct {
-	filePath string
-	blocks   []PlantUmlBlock
+	filePath       string
+	fileContent    string
+	updatedContent string
+	blocks         []PlantUmlBlock
 }
 
 type PlantUmlBlock struct {
@@ -43,21 +41,31 @@ func (p *PlantUmlBlock) GenerateMarkdownLink() {
 }
 
 // parse the plant uml blocks from a file
-func (f *PlantUmlFile) SetBlocks() (string, error) {
+func (f *PlantUmlFile) SetBlocks() {
 	var blocks []PlantUmlBlock
 	f.blocks = blocks
-	return "", errors.New("Not implemented")
 }
 
-// set file list for given pattern (cmd.FilePattern) that should be converted
+// filter files list for given pattern (cmd.FilePattern) that should be converted
+// also reads the file content into PlantUmlFile.fileContent
 func (p *PlantUml) SetFiles() {
 	var files []PlantUmlFile
 	// find files matching the pattern
+	// set fileContent and filePath for each PlantUmlFile
 	p.files = files
 }
 
-// update markdown file
-func (f *PlantUmlFile) Update() {
+// adding links and set PlantUmlFile.updatedContent
+func (f *PlantUmlFile) SetUpdatedContent() {
 	// you can always update the markdown file because the hash will be the same
 	// if the content does not change
+	f.updatedContent = "something"
+}
+
+// writes PlantUmlFile.updatedContent back to file f.filePath
+func (f *PlantUmlFile) Write() {
+	err := ioutil.WriteFile(f.filePath, []byte(f.updatedContent), 0664)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

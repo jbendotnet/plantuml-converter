@@ -30,14 +30,93 @@ func Test_SetFiles(t *testing.T) {
 		},
 	}
 	for _, file := range files {
-		writeEmptyFile(file)
+		writeFile(file, "")
 		defer os.Remove(file)
 	}
 	uml.SetFiles()
 	assert.Equal(t, expected, uml.files)
 }
 
-func writeEmptyFile(filename string) {
-	data := []byte("")
+type TestCase struct {
+	input    PlantUmlFile
+	template string
+	expected string
+}
+
+func TestPlantUmlFile_Update(t *testing.T) {
+	exampleBlock := `
+@startuml
+Bob -> Alice : hello
+@enduml
+`
+	testCases := []TestCase{
+		{
+			input: PlantUmlFile{
+				filePath: "testExampleOneBlock.md",
+				blocks: []PlantUmlBlock{
+					{
+						content: fmt.Sprintf(updateExampleOneBlock(), ""),
+					},
+				},
+			},
+			template: updateExampleOneBlock(),
+			expected: fmt.Sprintf(updateExampleOneBlock(), GenerateLink(exampleBlock)),
+		},
+	}
+	for _, testCase := range testCases {
+		testCase.input.SetUpdatedContent()
+		assert.Equal(t, testCase.expected, testCase.input.updatedContent)
+	}
+}
+
+func writeFile(filename string, content string) {
+	data := []byte(content)
 	ioutil.WriteFile(filename, data, os.ModePerm)
+}
+
+func updateExampleOneBlock() string {
+	return `
+## heading 1
+* adasd
+* asdd
+<!--
+@startuml
+Bob -> Alice : hello
+@enduml
+-->
+%s
+something else
+`
+}
+
+func updateExampleTwoBlocks() string {
+	return `
+## heading 1
+* adasd
+* asdd
+<!--
+@startuml
+Bob -> Alice : hello
+@enduml
+-->
+%s
+something else
+<!--
+@startuml
+Peter -> Gertrud : bye
+@enduml
+%s
+-->
+`
+}
+
+func updateExampleZeroBlocks() string {
+	return `
+## heading 1
+* adasd
+* asdd
+<!--
+hidden content
+-->
+`
 }
