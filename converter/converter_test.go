@@ -130,23 +130,6 @@ hidden content
 `
 }
 
-func Test_SetBlocks(t *testing.T) {
-
-	inputFilePath := "./testBlock.md"
-	inputBlocks := []PlantUmlBlock{}
-
-	inputFile := PlantUmlFile{}
-
-	inputFile.filePath = inputFilePath
-	inputFile.blocks = inputBlocks
-
-	err := inputFile.SetBlocks()
-	fmt.Println(err)
-
-	assert.Equal(t, len(inputFile.blocks), 2)
-
-}
-
 func Test_SucceededSetBlocks(t *testing.T) {
 
 	inputFilePath := "./testBlockSucceeded.md"
