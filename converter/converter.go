@@ -2,13 +2,12 @@ package converter
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
 
 	"github.com/signavio/plantuml-converter/cmd"
-	"io/ioutil"
-	"log"
 )
 
 type PlantUml struct {
@@ -70,15 +69,14 @@ func (f *PlantUmlFile) SetBlocks() error {
 	var hasStart bool = false
 
 	var myBlock PlantUmlBlock
-	fmt.Println(lines)
 
 	for i := 0; i < len(lines); i++ {
 		vline := lines[i]
-		if vline == "@startuml" {
+		if strings.TrimSpace(vline) == "@startuml" {
 			hasStart = true
-		} else if vline == "@enduml" {
+		} else if strings.TrimSpace(vline) == "@enduml" {
 			if !hasStart {
-				return errors.New("Adrian is nen ...")
+				return errors.New("Failed to parse blocks.")
 			}
 			myBlock.lineNumber = i + 1
 			blocks = append(blocks, myBlock)
@@ -88,8 +86,6 @@ func (f *PlantUmlFile) SetBlocks() error {
 			myBlock.content = myBlock.content + vline
 		}
 	}
-	// find @startuml and @enduml and map to blocks
-
 	f.blocks = blocks
-	return errors.New("Not implemented")
+	return nil
 }
