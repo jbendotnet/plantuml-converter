@@ -73,4 +73,6 @@ workflows:
   build-publish:
     jobs:
       - test
-      - release
+      - release:
+          requires:
+            - test
