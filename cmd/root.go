@@ -16,7 +16,7 @@ var rootCmd = &cobra.Command{
 	Short: "scan readme and place plantuml link",
 	Long:  "scan readme and place plantuml link",
 	Run: func(cmd *cobra.Command, args []string) {
-
+		fmt.Print("hello world")
 	},
 }
 

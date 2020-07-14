@@ -56,7 +56,8 @@ func (p *PlantUml) SetFiles() {
 	p.files = files
 }
 
-// update markdown file and add markdown link if it does not exist
+// update markdown file
 func (f *PlantUmlFile) Update() {
-
+	// you can always update the markdown file because the hash will be the same
+	// if the content does not change
 }
