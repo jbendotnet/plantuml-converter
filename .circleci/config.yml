@@ -69,3 +69,8 @@ jobs:
             else
               echo "The commit message(s) did not indicate a major/minor/patch version."
             fi
+workflows:
+  build-publish:
+    jobs:
+      - test
+      - release
