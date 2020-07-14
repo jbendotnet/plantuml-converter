@@ -1,0 +1,77 @@
+version: 2.1
+
+orbs:
+  go: circleci/go@1.3.0
+  codecov: codecov/codecov@1.1.0
+
+executors:
+  default:
+    machine:
+      image: ubuntu-1604:201903-01
+
+jobs:
+  test:
+    executor:
+      name: go/default
+      tag: '1.13'
+    working_directory: ~/go/src/github.com/signavio/plantuml-converter
+    steps:
+      - run: git config --global url.ssh://git@github.com/signavio.insteadOf https://github.com/signavio
+      - checkout
+      - checkout
+      - go/load-cache
+      - go/mod-download
+      - go/save-cache
+      - go/test:
+          covermode: atomic
+          failfast: false
+          race: true
+          short: true
+          coverprofile: coverage.txt
+      - codecov/upload:
+          file: coverage.txt
+      - run:
+          name: install-tools
+          command: |
+            go get -u github.com/mitchellh/gox
+      - run:
+          name: cross compile
+          command: |
+            gox -os="linux darwin windows" -arch="amd64" -output="dist/plantuml-converter_{{.OS}}_{{.Arch}}"
+            cd dist/ && gzip *
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/*
+  release:
+    executor:
+      name: go/default
+      tag: '1.13'
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "25:70:6c:c1:1b:2e:d8:3c:4a:a3:2b:e0:4f:73:6b:5e"
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: install-tools
+          command: |
+            go get -u github.com/tcnksm/ghr
+            go get -u github.com/stevenmatthewt/semantics
+      - run:
+          name: create release
+          command: |
+            tag=$(semantics --output-tag)
+            if [ "$tag" ]; then
+              ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $tag dist/
+            else
+              echo "The commit message(s) did not indicate a major/minor/patch version."
+            fi
+workflows:
+  build-publish:
+    jobs:
+      - test
+      - release:
+          requires:
+            - test
