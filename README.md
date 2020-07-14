@@ -1,5 +1,13 @@
 # plantuml-converter
 
+## Install
+Install from releases
+```bash
+curl -L https://github.com/signavio/plantuml-converter/releases/latest/download/plantuml-converter_linux_amd64.gz -o plantuml-converter.gz
+gunzip plantuml-converter.gz && chmod +x plantuml-converter && sudo mv plantuml-converter /usr/local/bin/plantuml-converter
+plantuml-converter --help
+```
+
 ### Versioning
 Versioning is done automatically done with [Semantics](https://github.com/stevenmatthewt/semantics).
 To increase the version any commit in master branch should start with `major:`, `minor:` or `patch:`.
