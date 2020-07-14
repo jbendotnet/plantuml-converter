@@ -3,6 +3,9 @@ package converter
 import (
 	"encoding/hex"
 	"fmt"
+	"io/ioutil"
+	"strings"
+
 	"github.com/signavio/plantuml-converter/cmd"
 	"io/ioutil"
 	"log"
@@ -40,12 +43,6 @@ func (p *PlantUmlBlock) GenerateMarkdownLink() {
 	p.markdownLink = GenerateLink(p.content)
 }
 
-// parse the plant uml blocks from a file
-func (f *PlantUmlFile) SetBlocks() {
-	var blocks []PlantUmlBlock
-	f.blocks = blocks
-}
-
 // filter files list for given pattern (cmd.FilePattern) that should be converted
 // also reads the file content into PlantUmlFile.fileContent
 func (p *PlantUml) SetFiles() {
@@ -59,13 +56,40 @@ func (p *PlantUml) SetFiles() {
 func (f *PlantUmlFile) SetUpdatedContent() {
 	// you can always update the markdown file because the hash will be the same
 	// if the content does not change
-	f.updatedContent = "something"
 }
 
-// writes PlantUmlFile.updatedContent back to file f.filePath
-func (f *PlantUmlFile) Write() {
-	err := ioutil.WriteFile(f.filePath, []byte(f.updatedContent), 0664)
-	if err != nil {
-		log.Fatal(err)
+// parse the plant uml blocks from a file
+func (f *PlantUmlFile) SetBlocks() error {
+	var blocks []PlantUmlBlock
+
+	// read lines from file
+	bytesRead, _ := ioutil.ReadFile(f.filePath)
+	fileContent := string(bytesRead)
+	lines := strings.Split(fileContent, "\n")
+
+	var hasStart bool = false
+
+	var myBlock PlantUmlBlock
+	fmt.Println(lines)
+
+	for i := 0; i < len(lines); i++ {
+		vline := lines[i]
+		if vline == "@startuml" {
+			hasStart = true
+		} else if vline == "@enduml" {
+			if !hasStart {
+				return errors.New("Adrian is nen ...")
+			}
+			myBlock.lineNumber = i + 1
+			blocks = append(blocks, myBlock)
+			myBlock = PlantUmlBlock{}
+			hasStart = false
+		} else if hasStart {
+			myBlock.content = myBlock.content + vline
+		}
 	}
+	// find @startuml and @enduml and map to blocks
+
+	f.blocks = blocks
+	return errors.New("Not implemented")
 }

@@ -2,11 +2,12 @@ package converter
 
 import (
 	"fmt"
-	"github.com/signavio/plantuml-converter/cmd"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/signavio/plantuml-converter/cmd"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_GenerateLink(t *testing.T) {
@@ -119,4 +120,6 @@ func updateExampleZeroBlocks() string {
 hidden content
 -->
 `
+}
+
 }
