@@ -61,10 +61,15 @@ func (f *PlantUmlFile) SetUpdatedContent() {
 func (f *PlantUmlFile) SetBlocks() error {
 	var blocks []PlantUmlBlock
 
-	// read lines from file
-	bytesRead, _ := ioutil.ReadFile(f.filePath)
-	fileContent := string(bytesRead)
-	lines := strings.Split(fileContent, "\n")
+	//TODO Has to be removed if f.fileContent is available
+	if len(f.fileContent) == 0 {
+		// read lines from file
+		bytesRead, _ := ioutil.ReadFile(f.filePath)
+		fileContent := string(bytesRead)
+		f.fileContent = fileContent
+	}
+
+	lines := strings.Split(f.fileContent, "\n")
 
 	var hasStart bool = false
 
