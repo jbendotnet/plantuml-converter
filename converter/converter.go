@@ -7,6 +7,15 @@ import (
 	"github.com/signavio/plantuml-converter/cmd"
 )
 
+type PlantUmlConverter interface {
+	GenerateLink() string
+	GetFiles() []PlantUmlFile
+}
+
+type PlantUml struct {
+	files []PlantUmlFile
+}
+
 type PlantUmlFile struct {
 	filePath string
 	blocks   []PlantUmlBlock
@@ -33,15 +42,18 @@ func (p *PlantUmlBlock) GenerateMarkdownLink() {
 	p.markdownLink = GenerateLink(p.content)
 }
 
-// parse a given input and return a list of plantUML blocks
-func ParsePlantUml(input string) (string, error) {
+// parse the plant uml blocks from a file
+func (f *PlantUmlFile) SetBlocks() (string, error) {
+	var blocks []PlantUmlBlock
+	f.blocks = blocks
 	return "", errors.New("Not implemented")
 }
 
-// get a file list for given pattern (cmd.FilePattern) that should be converted
-func GetFiles() []PlantUmlFile {
+// set file list for given pattern (cmd.FilePattern) that should be converted
+func (p *PlantUml) SetFiles() {
 	var files []PlantUmlFile
-	return files
+	// find files matching the pattern
+	p.files = files
 }
 
 // update markdown file and add markdown link if it does not exist
