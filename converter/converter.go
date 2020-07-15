@@ -85,7 +85,6 @@ func (f *PlantUmlFile) SetUpdatedContent() {
 		}
 
 	}
-	fmt.Println(f.updatedContent)
 
 }
 

@@ -6,7 +6,7 @@ This is documentation md test file
 :This is on defined on
 several **lines**;
 @enduml --->
-![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f7)
+![](http://www.plantuml.com/plantuml/png/oldurl)
 
 Docu
 Docu
