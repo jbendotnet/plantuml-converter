@@ -4,19 +4,22 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/signavio/plantuml-converter/converter"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
-var cfgFile, PlantUmlServer, FilePattern, ScanDirectoy string
+var cfgFile, FilePattern, ScanDirectory string
 
 var rootCmd = &cobra.Command{
 	Use:   "plantuml-converter",
 	Short: "scan readme and place plantuml link",
 	Long:  "scan readme and place plantuml link",
 	Run: func(cmd *cobra.Command, args []string) {
+		plantUML := converter.PlantUml{ScanDirectory: ScanDirectory, Pattern: FilePattern}
+		plantUML.Convert()
 		fmt.Print("hello world")
 	},
 }
@@ -31,9 +34,9 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.plantuml-converter.yaml)")
-	rootCmd.PersistentFlags().StringVarP(&PlantUmlServer, "server", "s", "http://www.plantuml.com", "plantUML server address")
+	rootCmd.PersistentFlags().StringVarP(&converter.PlantUmlServerUrl, "server", "s", "http://www.plantuml.com", "plantUML server address")
 	rootCmd.PersistentFlags().StringVarP(&FilePattern, "pattern", "p", "*.md", "file pattern for markdown files")
-	rootCmd.PersistentFlags().StringVarP(&ScanDirectoy, "directory", "d", ".", "which directory should be scanned for markdown files")
+	rootCmd.PersistentFlags().StringVarP(&ScanDirectory, "directory", "d", ".", "which directory should be scanned for markdown files")
 }
 
 // initConfig reads in config file and ENV variables if set.

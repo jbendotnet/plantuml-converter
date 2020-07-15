@@ -6,14 +6,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/signavio/plantuml-converter/cmd"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_GenerateLink(t *testing.T) {
 	input := "Bob -> Alice : hello"
 	output := GenerateLink(input)
-	assert.Contains(t, output, cmd.PlantUmlServer)
+	assert.Contains(t, output, PlantUmlServerUrl)
 	fmt.Println(output)
 }
 
@@ -24,8 +23,8 @@ type testFile struct {
 
 func Test_SetFiles(t *testing.T) {
 	uml := PlantUml{
-		scanDirectory: ".",
-		pattern:       "*.md",
+		ScanDirectory: ".",
+		Pattern:       "*.md",
 	}
 	files := []testFile{
 		{
@@ -50,7 +49,7 @@ func Test_SetFiles(t *testing.T) {
 		},
 	}
 	for _, file := range files {
-		testFile := fmt.Sprintf("%s%c%s", uml.scanDirectory, os.PathSeparator, file.path)
+		testFile := fmt.Sprintf("%s%c%s", uml.ScanDirectory, os.PathSeparator, file.path)
 		err := writeFile(testFile, file.content)
 		assert.NoError(t, err)
 		defer os.Remove(file.path)
@@ -66,36 +65,6 @@ func Test_SetFiles(t *testing.T) {
 type TestCase struct {
 	input              PlantUmlFile
 	template, expected string
-}
-
-func TestPlantUmlFile_Update(t *testing.T) {
-	// remove this once the implementation is done to let the tests run on ci
-	if testing.Short() {
-		t.Skip("skipping testing in short mode")
-	}
-	exampleBlock := `
-@startuml
-Bob -> Alice : hello
-@enduml
-`
-	testCases := []TestCase{
-		{
-			input: PlantUmlFile{
-				filePath: "testExampleOneBlock.md",
-				blocks: []PlantUmlBlock{
-					{
-						content: fmt.Sprintf(updateExampleOneBlock(), ""),
-					},
-				},
-			},
-			template: updateExampleOneBlock(),
-			expected: fmt.Sprintf(updateExampleOneBlock(), GenerateLink(exampleBlock)),
-		},
-	}
-	for _, testCase := range testCases {
-		testCase.input.SetUpdatedContent()
-		assert.Equal(t, testCase.expected, testCase.input.updatedContent)
-	}
 }
 
 func writeFile(filename string, content string) error {

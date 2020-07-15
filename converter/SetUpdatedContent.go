@@ -2,8 +2,6 @@ package converter
 
 import (
 	"strings"
-
-	"github.com/signavio/plantuml-converter/cmd"
 )
 
 // check whether a end of a block of the file is the current line number
@@ -28,7 +26,7 @@ func (f *PlantUmlFile) SetUpdatedContent() {
 			// insert the markdown
 			f.updatedContent = f.updatedContent + "![](" + block.markdownLink + ")\n"
 
-			if strings.HasPrefix(lines[i], "![]("+cmd.PlantUmlServer) == false {
+			if strings.HasPrefix(lines[i], "![]("+PlantUmlServerUrl) == false {
 				f.updatedContent = f.updatedContent + lines[i] + "\n"
 			}
 		} else {

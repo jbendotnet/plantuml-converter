@@ -10,10 +10,12 @@ import (
 
 const Max_Block_Length = 2000 // max length of url in browser
 
+var PlantUmlServerUrl string = "http://www.plantuml.com"
+
 type PlantUml struct {
 	files         []PlantUmlFile
-	scanDirectory string
-	pattern       string
+	ScanDirectory string
+	Pattern       string
 }
 
 type PlantUmlFile struct {
@@ -49,7 +51,7 @@ func (p *PlantUml) GetPlantFileByPath(path string) *PlantUmlFile {
 // it's possible also to apply the recursive with e.g. **/*.md
 func (p *PlantUml) SetFiles() {
 	var files []PlantUmlFile
-	pattern := fmt.Sprintf("%s%c%s", p.scanDirectory, os.PathSeparator, p.pattern)
+	pattern := fmt.Sprintf("%s%c%s", p.ScanDirectory, os.PathSeparator, p.Pattern)
 	fmt.Println(pattern)
 	matches, err := filepath.Glob(pattern)
 	if err != nil {
@@ -69,4 +71,21 @@ func (p *PlantUml) SetFiles() {
 		}
 	}
 	p.files = files
+}
+
+func (f *PlantUmlFile) Write() {
+	err := ioutil.WriteFile(f.filePath, []byte(f.updatedContent), 0664)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func (p *PlantUml) Convert() {
+	p.SetFiles()
+	for _, file := range p.files {
+		file.SetBlocks()
+		file.SetUpdatedContent()
+		file.Write()
+	}
+
 }
