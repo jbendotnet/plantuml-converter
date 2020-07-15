@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgFile, PlantUmlServer, FilePattern string
+var cfgFile, PlantUmlServer, FilePattern, ScanDirectoy string
 
 var rootCmd = &cobra.Command{
 	Use:   "plantuml-converter",
@@ -32,7 +32,8 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.plantuml-converter.yaml)")
 	rootCmd.PersistentFlags().StringVarP(&PlantUmlServer, "server", "s", "http://www.plantuml.com", "plantUML server address")
-	rootCmd.PersistentFlags().StringVarP(&FilePattern, "pattern", "p", "*.md", "plantUML server address")
+	rootCmd.PersistentFlags().StringVarP(&FilePattern, "pattern", "p", "*.md", "file pattern for markdown files")
+	rootCmd.PersistentFlags().StringVarP(&ScanDirectoy, "directory", "d", ".", "which directory should be scanned for markdown files")
 }
 
 // initConfig reads in config file and ENV variables if set.

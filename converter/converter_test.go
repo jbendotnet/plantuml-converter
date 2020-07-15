@@ -17,34 +17,50 @@ func Test_GenerateLink(t *testing.T) {
 	fmt.Println(output)
 }
 
+type testFile struct {
+	path    string
+	content string
+}
+
 func Test_SetFiles(t *testing.T) {
-	// remove this once the implementation is done to let the tests run on ci
-	if testing.Short() {
-		t.Skip("skipping testing in short mode")
-	}
 	uml := PlantUml{
-		scanDirectory: "/tmp/plantuml",
+		scanDirectory: ".",
+		pattern:       "*.md",
 	}
-	_ = os.Mkdir(uml.scanDirectory, os.ModePerm)
-	files := []string{"bla.txt", "some.html", "readme.md", "other-readme.md"}
-	expected := []PlantUmlFile{
+	files := []testFile{
 		{
-			filePath: uml.scanDirectory + "/other-readme.md",
-			blocks:   nil,
+			path:    "readme.md",
+			content: "hello world",
 		},
 		{
-			filePath: uml.scanDirectory + "/readme.md",
-			blocks:   nil,
+			path:    "other-readme.md",
+			content: "squirrel",
+		},
+	}
+	expected := []PlantUmlFile{
+		{
+			filePath:    "other-readme.md",
+			fileContent: "squirrel",
+			blocks:      nil,
+		},
+		{
+			filePath:    "readme.md",
+			fileContent: "hello world",
+			blocks:      nil,
 		},
 	}
 	for _, file := range files {
-		err := writeFile(uml.scanDirectory+"/"+file, "")
+		testFile := fmt.Sprintf("%s%c%s", uml.scanDirectory, os.PathSeparator, file.path)
+		err := writeFile(testFile, file.content)
 		assert.NoError(t, err)
-		defer os.Remove(file)
+		defer os.Remove(file.path)
 	}
 	uml.SetFiles()
 	assert.Equal(t, 2, len(uml.files))
-	assert.Equal(t, expected, uml.files)
+	for _, expectedFile := range expected {
+		assert.Equal(t, expectedFile.filePath, uml.GetPlantFileByPath(expectedFile.filePath).filePath)
+		assert.Equal(t, expectedFile.fileContent, uml.GetPlantFileByPath(expectedFile.filePath).fileContent)
+	}
 }
 
 type TestCase struct {
