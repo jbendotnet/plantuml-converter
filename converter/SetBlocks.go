@@ -28,7 +28,7 @@ func (f *PlantUmlFile) SetBlocks() error {
 	for i := 0; i < len(lines); i++ {
 
 		if blocksize > Max_Block_Length {
-			return errors.New("Failed due to big blocks.")
+			return errors.New("Failed due to big blocks")
 		}
 
 		vline := lines[i]
@@ -37,7 +37,7 @@ func (f *PlantUmlFile) SetBlocks() error {
 			hasStart = true
 		} else if strings.Contains(vline, "@enduml") {
 			if !hasStart {
-				return errors.New("Failed to parse blocks.")
+				return errors.New("Failed to parse blocks")
 			}
 			myBlock.lineNumber = i + 1
 			myBlock.GenerateMarkdownLink()
