@@ -29,6 +29,8 @@ type PlantUmlBlock struct {
 	content string
 	// generated markdown link
 	markdownLink string
+	// start line of the block
+	startNumber int
 }
 
 // generates a link to the rendered png image for given input
@@ -51,10 +53,38 @@ func (p *PlantUml) SetFiles() {
 	p.files = files
 }
 
+// check whether a end of a block of the file is the current line number
+func IsLineNUmberAnEndOfAPlantUmlBlock(f *PlantUmlFile, lineNumber int) (bool, *PlantUmlBlock) {
+	for i := 0; i < len(f.blocks); i++ {
+		block := f.blocks[i]
+		if block.lineNumber == lineNumber {
+			return true, &block
+		}
+	}
+	return false, nil
+}
+
 // adding links and set PlantUmlFile.updatedContent
 func (f *PlantUmlFile) SetUpdatedContent() {
 	// you can always update the markdown file because the hash will be the same
 	// if the content does not change
+	lines := strings.Split(f.fileContent, "\n")
+	for i := 0; i < len(lines); i++ {
+		isLineOfBlock, block := IsLineNUmberAnEndOfAPlantUmlBlock(f, i)
+		if isLineOfBlock {
+			// insert the markdown
+			f.updatedContent = f.updatedContent + block.markdownLink + "\n"
+
+			if strings.HasPrefix(lines[i], cmd.PlantUmlServer) == false {
+				f.updatedContent = f.updatedContent + lines[i] + "\n"
+			}
+		} else {
+			f.updatedContent = f.updatedContent + lines[i] + "\n"
+		}
+
+	}
+	fmt.Println(f.updatedContent)
+
 }
 
 // parse the plant uml blocks from a file
@@ -77,6 +107,7 @@ func (f *PlantUmlFile) SetBlocks() error {
 
 	for i := 0; i < len(lines); i++ {
 		vline := lines[i]
+
 		if strings.TrimSpace(vline) == "@startuml" {
 			hasStart = true
 		} else if strings.TrimSpace(vline) == "@enduml" {
@@ -84,11 +115,13 @@ func (f *PlantUmlFile) SetBlocks() error {
 				return errors.New("Failed to parse blocks.")
 			}
 			myBlock.lineNumber = i + 1
+			myBlock.GenerateMarkdownLink()
+
 			blocks = append(blocks, myBlock)
 			myBlock = PlantUmlBlock{}
 			hasStart = false
 		} else if hasStart {
-			myBlock.content = myBlock.content + vline
+			myBlock.content = myBlock.content + vline + "\n"
 		}
 	}
 	f.blocks = blocks

@@ -160,3 +160,20 @@ func Test_FailedSetBlocks(t *testing.T) {
 	assert.EqualError(t, err, "Failed to parse blocks.")
 	assert.Equal(t, len(inputFile.blocks), 0)
 }
+func Test_SetUpdatedContent(t *testing.T) {
+
+	inputFilePath := "./testUpdatedContent.md"
+	inputBlocks := []PlantUmlBlock{}
+
+	inputFile := PlantUmlFile{}
+
+	inputFile.filePath = inputFilePath
+	inputFile.blocks = inputBlocks
+
+	inputFile.SetBlocks()
+
+	inputFile.SetUpdatedContent()
+
+	// check whether links was pasted into the updatedContent
+
+}
