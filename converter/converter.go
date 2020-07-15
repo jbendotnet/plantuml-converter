@@ -1,17 +1,13 @@
 package converter
 
 import (
-	"encoding/hex"
-	"errors"
 	"fmt"
-	"io/ioutil"
-	"strings"
 	"log"
+	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/signavio/plantuml-converter/cmd"
 )
+
 const Max_Block_Length = 2000 // max length of url in browser
 
 type PlantUml struct {

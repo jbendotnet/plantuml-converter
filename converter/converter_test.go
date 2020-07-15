@@ -40,10 +40,10 @@ func Test_SetFiles(t *testing.T) {
 	for _, file := range files {
 		err := writeFile(uml.scanDirectory+"/"+file, "")
 		assert.NoError(t, err)
-		//defer os.Remove(file)
+		defer os.Remove(file)
 	}
 	uml.SetFiles()
-	assert.Equal(t, 2, uml.Length())
+	assert.Equal(t, 2, len(uml.files))
 	assert.Equal(t, expected, uml.files)
 }
 
