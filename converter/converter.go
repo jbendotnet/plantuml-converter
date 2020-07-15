@@ -60,12 +60,13 @@ func (p *PlantUml) SetFiles() {
 		data, err := ioutil.ReadFile(match)
 		if err != nil {
 			fmt.Printf("Could not read file %s\n", match)
+		} else {
+			plantFile := PlantUmlFile{
+				filePath:    match,
+				fileContent: string(data),
+			}
+			files = append(files, plantFile)
 		}
-		plantFile := PlantUmlFile{
-			filePath:    match,
-			fileContent: string(data),
-		}
-		files = append(files, plantFile)
 	}
 	p.files = files
 }
