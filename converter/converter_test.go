@@ -160,6 +160,23 @@ func Test_FailedSetBlocks(t *testing.T) {
 	assert.EqualError(t, err, "Failed to parse blocks.")
 	assert.Equal(t, len(inputFile.blocks), 0)
 }
+
+func Test_FailedSetBlocksToLong(t *testing.T) {
+
+	inputFilePath := "./testBlockFailedDueToLong.md"
+	inputBlocks := []PlantUmlBlock{}
+
+	inputFile := PlantUmlFile{}
+
+	inputFile.filePath = inputFilePath
+	inputFile.blocks = inputBlocks
+
+	err := inputFile.SetBlocks()
+
+	assert.EqualError(t, err, "Failed due to big blocks.")
+
+}
+
 func Test_SetUpdatedContent(t *testing.T) {
 
 	inputFilePath := "./testUpdatedContent.md"

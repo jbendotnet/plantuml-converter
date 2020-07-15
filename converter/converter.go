@@ -10,6 +10,8 @@ import (
 	"github.com/signavio/plantuml-converter/cmd"
 )
 
+const Max_Block_Length = 2000 // max length of url in browser
+
 type PlantUml struct {
 	files []PlantUmlFile
 }
@@ -73,9 +75,9 @@ func (f *PlantUmlFile) SetUpdatedContent() {
 		isLineOfBlock, block := IsLineNUmberAnEndOfAPlantUmlBlock(f, i)
 		if isLineOfBlock {
 			// insert the markdown
-			f.updatedContent = f.updatedContent + block.markdownLink + "\n"
+			f.updatedContent = f.updatedContent + "![](" + block.markdownLink + ")\n"
 
-			if strings.HasPrefix(lines[i], cmd.PlantUmlServer) == false {
+			if strings.HasPrefix(lines[i], "![]("+cmd.PlantUmlServer) == false {
 				f.updatedContent = f.updatedContent + lines[i] + "\n"
 			}
 		} else {
@@ -102,15 +104,21 @@ func (f *PlantUmlFile) SetBlocks() error {
 	lines := strings.Split(f.fileContent, "\n")
 
 	var hasStart bool = false
+	var blocksize int = 0
 
 	var myBlock PlantUmlBlock
 
 	for i := 0; i < len(lines); i++ {
+
+		if blocksize > Max_Block_Length {
+			return errors.New("Failed due to big blocks.")
+		}
+
 		vline := lines[i]
 
-		if strings.TrimSpace(vline) == "@startuml" {
+		if strings.Contains(vline, "@startuml") {
 			hasStart = true
-		} else if strings.TrimSpace(vline) == "@enduml" {
+		} else if strings.Contains(vline, "@enduml") {
 			if !hasStart {
 				return errors.New("Failed to parse blocks.")
 			}
@@ -120,8 +128,10 @@ func (f *PlantUmlFile) SetBlocks() error {
 			blocks = append(blocks, myBlock)
 			myBlock = PlantUmlBlock{}
 			hasStart = false
+			blocksize = 0
 		} else if hasStart {
 			myBlock.content = myBlock.content + vline + "\n"
+			blocksize = blocksize + len(vline)
 		}
 	}
 	f.blocks = blocks

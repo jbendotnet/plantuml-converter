@@ -1,19 +1,21 @@
 This is documentation md test file
 
-@startuml
+<!--- @startuml
+
 :Hello world;
 :This is on defined on
 several **lines**;
-@enduml
-http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f7
+@enduml --->
+![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f7)
 
+Docu
 Docu
 
 dafsgsrgsgs dsagdsgsd gsdg
 sdg sdgsgs gs gs gsf gss
 gsgs sgsgs gsf gsf
 
-@startuml
+<!---@startuml
 
 start
 
@@ -26,7 +28,7 @@ endif
 
 stop
 
-@enduml
+@enduml--->
 
 dsgsfgsd gdsgsdgsfgsfgs. sgsd
 
