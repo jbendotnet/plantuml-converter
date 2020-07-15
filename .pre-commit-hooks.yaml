@@ -1,0 +1,6 @@
+- id: plantuml_coverter
+  name: PlantUml Converter
+  description: reads plantum markups, parse and insert a link to reander the svg representation
+  entry: plantuml_coverter.sh
+  language: script
+  files: \.md$
