@@ -83,7 +83,10 @@ func (f *PlantUmlFile) Write() {
 func (p *PlantUml) Convert() {
 	p.SetFiles()
 	for _, file := range p.files {
-		file.SetBlocks()
+		err := file.SetBlocks()
+		if err != nil {
+			log.Fatalf("%f %s", err, file.filePath)
+		}
 		file.SetUpdatedContent()
 		file.Write()
 	}

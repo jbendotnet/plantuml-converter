@@ -21,6 +21,22 @@ func Test_SucceededSetBlocks(t *testing.T) {
 	assert.Equal(t, err, nil)
 	assert.Equal(t, len(inputFile.blocks), 2)
 }
+
+func Test_SucceededShortSetBlocks(t *testing.T) {
+
+	inputFilePath := "./mdmocks/testBlockSucceededSingle.md"
+	inputBlocks := []PlantUmlBlock{}
+
+	inputFile := PlantUmlFile{}
+
+	inputFile.filePath = inputFilePath
+	inputFile.blocks = inputBlocks
+
+	err := inputFile.SetBlocks()
+
+	assert.Equal(t, err, nil)
+	assert.Equal(t, len(inputFile.blocks), 1)
+}
 func Test_FailedSetBlocks(t *testing.T) {
 
 	inputFilePath := "./mdmocks/testBlockFailed.md"

@@ -33,3 +33,10 @@ stop
 dsgsfgsd gdsgsdgsfgsfgs. sgsd
 
 END Docu
+
+@startuml
+
+:Hello world;
+:This is on defined on
+several **lines**;
+@enduml
