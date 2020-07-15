@@ -1,31 +1,34 @@
 This is documentation md test file
 
-@startuml
+<!--- @startuml
+
 :Hello world;
 :This is on defined on
 several **lines**;
-@enduml
+@enduml --->
+![](http://www.plantuml.com/plantuml/png/oldurl)
 
-Docu 
+Docu
+Docu
 
 dafsgsrgsgs dsagdsgsd gsdg
 sdg sdgsgs gs gs gsf gss
- gsgs sgsgs gsf gsf
+gsgs sgsgs gsf gsf
 
- @startuml
+<!---@startuml
 
 start
 
 if (Graphviz installed?) then (yes)
-  :process all\ndiagrams;
+:process all\ndiagrams;
 else (no)
-  :process only
-  __sequence__ and __activity__ diagrams;
+:process only
+**sequence** and **activity** diagrams;
 endif
 
 stop
 
-@enduml
+@enduml--->
 
 dsgsfgsd gdsgsdgsfgsfgs. sgsd
 

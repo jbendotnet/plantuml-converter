@@ -5,13 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"strings"
 	"log"
-	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/signavio/plantuml-converter/cmd"
 )
+const Max_Block_Length = 2000 // max length of url in browser
 
 type PlantUml struct {
 	files         []PlantUmlFile
@@ -33,21 +34,8 @@ type PlantUmlBlock struct {
 	content string
 	// generated markdown link
 	markdownLink string
-}
-
-// generates a link to the rendered png image for given input
-func GenerateLink(input string) string {
-	hash := hex.EncodeToString([]byte(input))
-	return fmt.Sprintf("%s/plantuml/png/~h%s", cmd.PlantUmlServer, hash)
-}
-
-// set the markdown link
-func (p *PlantUmlBlock) GenerateMarkdownLink() {
-	p.markdownLink = GenerateLink(p.content)
-}
-
-func (p *PlantUml) Length() int {
-	return len(p.files)
+	// start line of the block
+	startNumber int
 }
 
 // filter files list for given pattern (cmd.FilePattern) that should be converted
@@ -73,48 +61,4 @@ func (p *PlantUml) SetFiles() {
 	}
 
 	p.files = files
-}
-
-// adding links and set PlantUmlFile.updatedContent
-func (f *PlantUmlFile) SetUpdatedContent() {
-	// you can always update the markdown file because the hash will be the same
-	// if the content does not change
-}
-
-// parse the plant uml blocks from a file
-func (f *PlantUmlFile) SetBlocks() error {
-	var blocks []PlantUmlBlock
-
-	//TODO Has to be removed if f.fileContent is available
-	if len(f.fileContent) == 0 {
-		// read lines from file
-		bytesRead, _ := ioutil.ReadFile(f.filePath)
-		fileContent := string(bytesRead)
-		f.fileContent = fileContent
-	}
-
-	lines := strings.Split(f.fileContent, "\n")
-
-	var hasStart bool = false
-
-	var myBlock PlantUmlBlock
-
-	for i := 0; i < len(lines); i++ {
-		vline := lines[i]
-		if strings.TrimSpace(vline) == "@startuml" {
-			hasStart = true
-		} else if strings.TrimSpace(vline) == "@enduml" {
-			if !hasStart {
-				return errors.New("Failed to parse blocks.")
-			}
-			myBlock.lineNumber = i + 1
-			blocks = append(blocks, myBlock)
-			myBlock = PlantUmlBlock{}
-			hasStart = false
-		} else if hasStart {
-			myBlock.content = myBlock.content + vline
-		}
-	}
-	f.blocks = blocks
-	return nil
 }
