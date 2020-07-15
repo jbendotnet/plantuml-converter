@@ -22,30 +22,34 @@ func Test_SetFiles(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping testing in short mode")
 	}
-	uml := PlantUml{}
+	uml := PlantUml{
+		scanDirectory: "/tmp/plantuml",
+	}
+	_ = os.Mkdir(uml.scanDirectory, os.ModePerm)
 	files := []string{"bla.txt", "some.html", "readme.md", "other-readme.md"}
 	expected := []PlantUmlFile{
 		{
-			filePath: "readme.md",
+			filePath: uml.scanDirectory + "/other-readme.md",
 			blocks:   nil,
 		},
 		{
-			filePath: "other-readme.md",
+			filePath: uml.scanDirectory + "/readme.md",
 			blocks:   nil,
 		},
 	}
 	for _, file := range files {
-		writeFile(file, "")
-		defer os.Remove(file)
+		err := writeFile(uml.scanDirectory+"/"+file, "")
+		assert.NoError(t, err)
+		//defer os.Remove(file)
 	}
 	uml.SetFiles()
+	assert.Equal(t, 2, uml.Length())
 	assert.Equal(t, expected, uml.files)
 }
 
 type TestCase struct {
-	input    PlantUmlFile
-	template string
-	expected string
+	input              PlantUmlFile
+	template, expected string
 }
 
 func TestPlantUmlFile_Update(t *testing.T) {
@@ -78,9 +82,9 @@ Bob -> Alice : hello
 	}
 }
 
-func writeFile(filename string, content string) {
+func writeFile(filename string, content string) error {
 	data := []byte(content)
-	ioutil.WriteFile(filename, data, os.ModePerm)
+	return ioutil.WriteFile(filename, data, os.ModePerm)
 }
 
 func updateExampleOneBlock() string {

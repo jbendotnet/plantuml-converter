@@ -5,13 +5,17 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/signavio/plantuml-converter/cmd"
 )
 
 type PlantUml struct {
-	files []PlantUmlFile
+	files         []PlantUmlFile
+	scanDirectory string
 }
 
 type PlantUmlFile struct {
@@ -42,12 +46,32 @@ func (p *PlantUmlBlock) GenerateMarkdownLink() {
 	p.markdownLink = GenerateLink(p.content)
 }
 
+func (p *PlantUml) Length() int {
+	return len(p.files)
+}
+
 // filter files list for given pattern (cmd.FilePattern) that should be converted
 // also reads the file content into PlantUmlFile.fileContent
 func (p *PlantUml) SetFiles() {
 	var files []PlantUmlFile
 	// find files matching the pattern
 	// set fileContent and filePath for each PlantUmlFile
+	err := filepath.Walk(p.scanDirectory, func(path string, info os.FileInfo, err error) error {
+		fmt.Println(path)
+		if strings.HasSuffix(path, ".md") {
+			fmt.Printf("adding %s\n", path)
+			plantFile := PlantUmlFile{
+				filePath:    path,
+				fileContent: "",
+			}
+			files = append(files, plantFile)
+		}
+		return nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	p.files = files
 }
 
