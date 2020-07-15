@@ -132,7 +132,7 @@ hidden content
 
 func Test_SucceededSetBlocks(t *testing.T) {
 
-	inputFilePath := "./testBlockSucceeded.md"
+	inputFilePath := "./mdmocks/testBlockSucceeded.md"
 	inputBlocks := []PlantUmlBlock{}
 
 	inputFile := PlantUmlFile{}
@@ -147,7 +147,7 @@ func Test_SucceededSetBlocks(t *testing.T) {
 }
 func Test_FailedSetBlocks(t *testing.T) {
 
-	inputFilePath := "./testBlockFailed.md"
+	inputFilePath := "./mdmocks/testBlockFailed.md"
 	inputBlocks := []PlantUmlBlock{}
 
 	inputFile := PlantUmlFile{}
@@ -163,7 +163,7 @@ func Test_FailedSetBlocks(t *testing.T) {
 
 func Test_FailedSetBlocksToLong(t *testing.T) {
 
-	inputFilePath := "./testBlockFailedDueToLong.md"
+	inputFilePath := "./mdmocks/testBlockFailedDueToLong.md"
 	inputBlocks := []PlantUmlBlock{}
 
 	inputFile := PlantUmlFile{}
@@ -179,7 +179,7 @@ func Test_FailedSetBlocksToLong(t *testing.T) {
 
 func Test_SetUpdatedContent(t *testing.T) {
 
-	inputFilePath := "./testUpdatedContent.md"
+	inputFilePath := "./mdmocks/testUpdatedContent.md"
 	inputBlocks := []PlantUmlBlock{}
 
 	inputFile := PlantUmlFile{}
