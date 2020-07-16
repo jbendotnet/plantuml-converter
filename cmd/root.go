@@ -19,8 +19,15 @@ var rootCmd = &cobra.Command{
 	Long:  "scan readme and place plantuml link",
 	Run: func(cmd *cobra.Command, args []string) {
 		plantUML := converter.PlantUml{ScanDirectory: ScanDirectory, Pattern: FilePattern}
-		plantUML.Convert()
-		fmt.Print("hello world")
+		switch plantUML.Convert() {
+		case converter.StatusUpdated:
+			os.Exit(3)
+		case converter.StatusUnchanged:
+			os.Exit(0)
+		default:
+			// should not happen
+			os.Exit(1)
+		}
 	},
 }
 
