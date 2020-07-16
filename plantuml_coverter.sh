@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+set +x
 
 for md_file in "$@"; do
 
