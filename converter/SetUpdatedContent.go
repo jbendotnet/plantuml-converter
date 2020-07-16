@@ -46,7 +46,7 @@ func (f *PlantUmlFile) SetUpdatedContent() {
 			if isNotPlantUMLUrl {
 				appendLineContent(f, lines[i])
 			}
-		} else {
+		} else if i < len(lines) {
 			appendLineContent(f, lines[i])
 		}
 	}
