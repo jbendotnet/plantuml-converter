@@ -19,7 +19,7 @@ func Test_SucceededSetBlocks(t *testing.T) {
 	err := inputFile.SetBlocks()
 
 	assert.Equal(t, err, nil)
-	assert.Equal(t, len(inputFile.blocks), 2)
+	assert.Equal(t, len(inputFile.blocks), 3)
 }
 
 func Test_FailedSetBlocks(t *testing.T) {
