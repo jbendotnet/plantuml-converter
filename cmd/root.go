@@ -41,7 +41,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.plantuml-converter.yaml)")
-	rootCmd.PersistentFlags().StringVarP(&converter.PlantUmlServerUrl, "server", "s", "http://www.plantuml.com", "plantUML server address")
+	rootCmd.PersistentFlags().StringVarP(&converter.PlantUmlServerUrl, "server", "s", "https://plantuml.signavio.com", "plantUML server address")
 	rootCmd.PersistentFlags().StringVarP(&FilePattern, "pattern", "p", "*.md", "file pattern for markdown files")
 	rootCmd.PersistentFlags().StringVarP(&ScanDirectory, "directory", "d", ".", "which directory should be scanned for markdown files")
 }
