@@ -21,10 +21,11 @@ func Test_SetUpdatedContent(t *testing.T) {
 	inputFile.SetUpdatedContent()
 
 	// check whether links was pasted into the updatedContent
-	assert.Contains(t, inputFile.updatedContent, "http://www.plantuml.com/plantuml/png/~h0a3a48656c6c6f20776f726c643b0a3a54686973206973206f6e20646566696e6564206f6e0a7365766572616c202a2a6c696e65732a2a3b0a")
-	assert.Contains(t, inputFile.updatedContent, "http://www.plantuml.com/plantuml/png/~h0a73746172740a0a69662028477261706876697a20696e7374616c6c65643f29207468656e2028796573290a3a70726f6365737320616c6c5c6e6469616772616d733b0a656c736520286e6f290a3a70726f63657373206f6e6c790a2a2a73657175656e63652a2a20616e64202a2a61637469766974792a2a206469616772616d733b0a656e6469660a0a73746f700a0a")
+	assert.Contains(t, inputFile.updatedContent, PlantUmlServerUrl+"/png/UDhYil98pSd9LoZFByf9CJGojkQo2id8B5R8B5R8prD8IKtBp4jDKSZFuofEBKijIinHqDBAoSnBBTRI0gjCLKZDIr4ulEtmaiDx56pi5BW00G00__yY7Hii")
+	assert.Contains(t, inputFile.updatedContent, PlantUmlServerUrl+"/png/UDfCop6kmp080D2TKp0w7E7_eMClqGNPf46Ys3KqadlwhjdVWqYU2Q0xbllaSPpwHVL8DfDssp0FSInBOeE_CNkL26IpXpVbv-HN_8DO21Rl5z7T5X25l3_YLOYGlI4HrzHJSn7XvNlJ7I2o3u1V0000__yPgZ3B")
+	assert.Contains(t, inputFile.updatedContent, PlantUmlServerUrl+"/png/UDhYil98pSd9LoZFByf9iUQo2id8B5R8B5R8prD8IKtBp4jDKSZFuofEBKijIinHqDBAoSnBBTRIikO21000__yaAHAX")
 	// check also whether old linkds were replaced
-	assert.NotContains(t, inputFile.updatedContent, "http://www.plantuml.com/plantuml/png/oldurl")
+	assert.NotContains(t, inputFile.updatedContent, PlantUmlServerUrl+"/png/oldurl")
 }
 
 func Test_SucceededShortSetBlocksWithSetUpdatedContent(t *testing.T) {
@@ -42,7 +43,7 @@ func Test_SucceededShortSetBlocksWithSetUpdatedContent(t *testing.T) {
 
 	assert.Equal(t, err, nil)
 	assert.Equal(t, len(inputFile.blocks), 1)
-	assert.Equal(t, inputFile.updatedContent, "@startuml\n:Hello world;\n@enduml\n![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f726c643b0a)")
+	assert.Equal(t, inputFile.updatedContent, "@startuml\n:Hello world;\n@enduml\n![]("+PlantUmlServerUrl+"/png/UDgoyaZDoSbNACyloacnvW84003__oJI1Bm=)")
 }
 
 func Test_SucceededShortSetBlocksWithSetUpdatedContentMultipleTimes(t *testing.T) {
@@ -60,5 +61,5 @@ func Test_SucceededShortSetBlocksWithSetUpdatedContentMultipleTimes(t *testing.T
 
 	assert.Equal(t, err, nil)
 	assert.Equal(t, len(inputFile.blocks), 1)
-	assert.Equal(t, inputFile.updatedContent, "@startuml\n:Hello world;\n@enduml\n![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f726c643b0a)")
+	assert.Equal(t, inputFile.updatedContent, inputFile.fileContent)
 }
