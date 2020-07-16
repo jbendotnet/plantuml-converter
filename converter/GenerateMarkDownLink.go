@@ -12,7 +12,7 @@ const base64_alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
 // generates a link to the rendered png image for given input
 func GenerateLink(input string) string {
 	hash := Encode([]byte(input))
-	return fmt.Sprintf("%s/svg/%s", PlantUmlServerUrl, hash)
+	return fmt.Sprintf("%s/png/%s", PlantUmlServerUrl, hash)
 }
 
 func Encode(raw []byte) string {
