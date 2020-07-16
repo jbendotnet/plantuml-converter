@@ -37,7 +37,7 @@ jobs:
             go get -u github.com/signavio/plantuml-converter
       - run:
           name: run plantuml converter
-          comand: |
+          command: |
             plantuml-converter
       - run:
           name: cross compile
