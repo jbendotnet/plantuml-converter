@@ -1,7 +1,6 @@
 package converter
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -41,7 +40,6 @@ func Test_SucceededShortSetBlocksWithSetUpdatedContent(t *testing.T) {
 	err := inputFile.SetBlocks()
 	inputFile.SetUpdatedContent()
 
-	fmt.Println(inputFile.updatedContent)
 	assert.Equal(t, err, nil)
 	assert.Equal(t, len(inputFile.blocks), 1)
 	assert.Equal(t, inputFile.updatedContent, "@startuml\n:Hello world;\n@enduml\n![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f726c643b0a)\n")
