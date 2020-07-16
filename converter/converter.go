@@ -9,6 +9,10 @@ import (
 )
 
 const Max_Block_Length = 2000 // max length of url in browser
+const (
+	StatusUpdated = iota + 1
+	StatusUnchanged
+)
 
 var PlantUmlServerUrl string = "http://www.plantuml.com"
 
@@ -52,13 +56,11 @@ func (p *PlantUml) GetPlantFileByPath(path string) *PlantUmlFile {
 func (p *PlantUml) SetFiles() {
 	var files []PlantUmlFile
 	pattern := fmt.Sprintf("%s%c%s", p.ScanDirectory, os.PathSeparator, p.Pattern)
-	fmt.Println(pattern)
 	matches, err := filepath.Glob(pattern)
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, match := range matches {
-		fmt.Println("found match " + match)
 		data, err := ioutil.ReadFile(match)
 		if err != nil {
 			fmt.Printf("Could not read file %s\n", match)
@@ -80,15 +82,22 @@ func (f *PlantUmlFile) Write() {
 	}
 }
 
-func (p *PlantUml) Convert() {
+// process all files
+// return value indicated if files were updated or not
+func (p *PlantUml) Convert() int {
+	status := StatusUnchanged
 	p.SetFiles()
 	for _, file := range p.files {
 		err := file.SetBlocks()
 		if err != nil {
-			log.Fatalf("%f %s", err, file.filePath)
+			log.Fatalf("%s %s", err.Error(), file.filePath)
 		}
 		file.SetUpdatedContent()
+		if file.fileContent != file.updatedContent {
+			fmt.Printf("modifying file %s\n", file.filePath)
+			status = StatusUpdated
+		}
 		file.Write()
 	}
-
+	return status
 }
