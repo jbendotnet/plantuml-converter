@@ -15,12 +15,19 @@ func isLineNumberEndOfBlock(f *PlantUmlFile, lineNumber int) (bool, *PlantUmlBlo
 	return false, nil
 }
 
+func prependLineContentWithLineBreak(lineContent string) string {
+	if len(lineContent) > 0 {
+		return lineContent + "\n"
+	}
+	return lineContent
+}
+
 func appendLineContent(f *PlantUmlFile, lineContent string) {
-	f.updatedContent = f.updatedContent + lineContent + "\n"
+	f.updatedContent = prependLineContentWithLineBreak(f.updatedContent) + lineContent
 }
 
 func appendMarkdownLink(f *PlantUmlFile, block *PlantUmlBlock) {
-	f.updatedContent = f.updatedContent + "![](" + block.markdownLink + ")\n"
+	f.updatedContent = prependLineContentWithLineBreak(f.updatedContent) + "![](" + block.markdownLink + ")"
 }
 
 // adding links and set PlantUmlFile.updatedContent

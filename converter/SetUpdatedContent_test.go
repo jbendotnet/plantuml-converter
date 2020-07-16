@@ -42,5 +42,23 @@ func Test_SucceededShortSetBlocksWithSetUpdatedContent(t *testing.T) {
 
 	assert.Equal(t, err, nil)
 	assert.Equal(t, len(inputFile.blocks), 1)
-	assert.Equal(t, inputFile.updatedContent, "@startuml\n:Hello world;\n@enduml\n![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f726c643b0a)\n")
+	assert.Equal(t, inputFile.updatedContent, "@startuml\n:Hello world;\n@enduml\n![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f726c643b0a)")
+}
+
+func Test_SucceededShortSetBlocksWithSetUpdatedContentMultipleTimes(t *testing.T) {
+
+	inputFilePath := "./mdmocks/testBlockSucceededSingleUntouched.md"
+	inputBlocks := []PlantUmlBlock{}
+
+	inputFile := PlantUmlFile{}
+
+	inputFile.filePath = inputFilePath
+	inputFile.blocks = inputBlocks
+
+	err := inputFile.SetBlocks()
+	inputFile.SetUpdatedContent()
+
+	assert.Equal(t, err, nil)
+	assert.Equal(t, len(inputFile.blocks), 1)
+	assert.Equal(t, inputFile.updatedContent, "@startuml\n:Hello world;\n@enduml\n![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f726c643b0a)")
 }
