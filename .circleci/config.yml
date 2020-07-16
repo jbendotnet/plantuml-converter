@@ -34,6 +34,11 @@ jobs:
           name: install-tools
           command: |
             go get -u github.com/mitchellh/gox
+            go get -u github.com/signavio/plantuml-converter
+      - run:
+          name: run plantuml converter
+          comand: |
+            plantuml-converter
       - run:
           name: cross compile
           command: |
