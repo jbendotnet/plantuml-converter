@@ -1,5 +1,5 @@
 repos:
-  - repo: git://github.com/signavio/plantuml-infrastructure
+  - repo: https://github.com/signavio/plantuml-converter
     rev: master
     hooks:
       - id: plantuml_coverter
