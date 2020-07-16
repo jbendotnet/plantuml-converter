@@ -10,6 +10,21 @@ executors:
       image: ubuntu-1604:201903-01
 
 jobs:
+  check-plantuml:
+    executor:
+      name: go/default
+      tag: '1.13'
+    working_directory: ~/go/src/github.com/signavio/plantuml-converter
+    steps:
+      - checkout
+      - run:
+          name: install-tools
+          command: |
+            go get -u github.com/signavio/plantuml-converter
+      - run:
+          name: run plantuml converter
+          command: |
+            plantuml-converter
   test:
     executor:
       name: go/default
@@ -17,7 +32,6 @@ jobs:
     working_directory: ~/go/src/github.com/signavio/plantuml-converter
     steps:
       - run: git config --global url.ssh://git@github.com/signavio.insteadOf https://github.com/signavio
-      - checkout
       - checkout
       - go/load-cache
       - go/mod-download
@@ -34,11 +48,6 @@ jobs:
           name: install-tools
           command: |
             go get -u github.com/mitchellh/gox
-            go get -u github.com/signavio/plantuml-converter
-      - run:
-          name: run plantuml converter
-          command: |
-            plantuml-converter
       - run:
           name: cross compile
           command: |
