@@ -4,7 +4,7 @@ set +x
 
 for md_file in "$@"; do
 
-  plantuml-converter "$md_file"
+  plantuml-converter -p "$md_file"
   return_val="$?"
 
   if [ $return_val -ne 0 ]; then
