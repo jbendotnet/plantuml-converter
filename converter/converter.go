@@ -14,7 +14,7 @@ const (
 	StatusUnchanged
 )
 
-var PlantUmlServerUrl string = "http://www.plantuml.com"
+var PlantUmlServerUrl string = "https://plantuml.signavio.com"
 
 type PlantUml struct {
 	files         []PlantUmlFile
