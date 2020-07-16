@@ -85,6 +85,7 @@ jobs:
 workflows:
   build-publish:
     jobs:
+      - check-plantuml
       - test
       - release:
           requires:
