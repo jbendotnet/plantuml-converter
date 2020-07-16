@@ -8,16 +8,12 @@ import (
 
 func Test_SetUpdatedContent(t *testing.T) {
 
-	inputFilePath := "./mdmocks/testUpdatedContent.md"
-	inputBlocks := []PlantUmlBlock{}
-
-	inputFile := PlantUmlFile{}
-
-	inputFile.filePath = inputFilePath
-	inputFile.blocks = inputBlocks
+	inputFile := PlantUmlFile{
+		filePath: "./mdmocks/testUpdatedContent.md",
+		blocks:   []PlantUmlBlock{},
+	}
 
 	inputFile.SetBlocks()
-
 	inputFile.SetUpdatedContent()
 
 	// check whether links was pasted into the updatedContent
@@ -30,13 +26,10 @@ func Test_SetUpdatedContent(t *testing.T) {
 
 func Test_SucceededShortSetBlocksWithSetUpdatedContent(t *testing.T) {
 
-	inputFilePath := "./mdmocks/testBlockSucceededSingle.md"
-	inputBlocks := []PlantUmlBlock{}
-
-	inputFile := PlantUmlFile{}
-
-	inputFile.filePath = inputFilePath
-	inputFile.blocks = inputBlocks
+	inputFile := PlantUmlFile{
+		filePath: "./mdmocks/testBlockSucceededSingle.md",
+		blocks:   []PlantUmlBlock{},
+	}
 
 	err := inputFile.SetBlocks()
 	inputFile.SetUpdatedContent()
@@ -48,13 +41,10 @@ func Test_SucceededShortSetBlocksWithSetUpdatedContent(t *testing.T) {
 
 func Test_SucceededShortSetBlocksWithSetUpdatedContentMultipleTimes(t *testing.T) {
 
-	inputFilePath := "./mdmocks/testBlockSucceededSingleUntouched.md"
-	inputBlocks := []PlantUmlBlock{}
-
-	inputFile := PlantUmlFile{}
-
-	inputFile.filePath = inputFilePath
-	inputFile.blocks = inputBlocks
+	inputFile := PlantUmlFile{
+		filePath: "./mdmocks/testBlockSucceededSingleUntouched.md",
+		blocks:   []PlantUmlBlock{},
+	}
 
 	err := inputFile.SetBlocks()
 	inputFile.SetUpdatedContent()

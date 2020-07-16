@@ -8,13 +8,10 @@ import (
 
 func Test_SucceededSetBlocks(t *testing.T) {
 
-	inputFilePath := "./mdmocks/testBlockSucceeded.md"
-	inputBlocks := []PlantUmlBlock{}
-
-	inputFile := PlantUmlFile{}
-
-	inputFile.filePath = inputFilePath
-	inputFile.blocks = inputBlocks
+	inputFile := PlantUmlFile{
+		filePath: "./mdmocks/testBlockSucceeded.md",
+		blocks:   []PlantUmlBlock{},
+	}
 
 	err := inputFile.SetBlocks()
 
@@ -24,13 +21,10 @@ func Test_SucceededSetBlocks(t *testing.T) {
 
 func Test_FailedSetBlocks(t *testing.T) {
 
-	inputFilePath := "./mdmocks/testBlockFailed.md"
-	inputBlocks := []PlantUmlBlock{}
-
-	inputFile := PlantUmlFile{}
-
-	inputFile.filePath = inputFilePath
-	inputFile.blocks = inputBlocks
+	inputFile := PlantUmlFile{
+		filePath: "./mdmocks/testBlockFailed.md",
+		blocks:   []PlantUmlBlock{},
+	}
 
 	err := inputFile.SetBlocks()
 
@@ -40,13 +34,10 @@ func Test_FailedSetBlocks(t *testing.T) {
 
 func Test_FailedSetBlocksToLong(t *testing.T) {
 
-	inputFilePath := "./mdmocks/testBlockFailedDueToLong.md"
-	inputBlocks := []PlantUmlBlock{}
-
-	inputFile := PlantUmlFile{}
-
-	inputFile.filePath = inputFilePath
-	inputFile.blocks = inputBlocks
+	inputFile := PlantUmlFile{
+		filePath: "./mdmocks/testBlockFailedDueToLong.md",
+		blocks:   []PlantUmlBlock{},
+	}
 
 	err := inputFile.SetBlocks()
 
