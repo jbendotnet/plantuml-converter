@@ -22,4 +22,4 @@ Additional the cross-compiled binaries for windows, darwin and linux will be upl
 :This is on defined on
 several **lines** end of line;
 @enduml-->
-![](http://www.plantuml.com/plantuml/png/~h3a48656c6c6f20776f726c643b0a3a54686973206973206f6e20646566696e6564206f6e0a7365766572616c202a2a6c696e65732a2a20656e64206f66206c696e653b0a)
+![](https://plantuml.signavio.com/png/UDeKny49W30C1T1xflZdZD0ku00k8EGN0o611dHzyVZ6mOZ2MpjioZXlRtYZ4iRbIKEbD1_kAw0QdcnLC0sry7FA5m00__yUtHQh)
