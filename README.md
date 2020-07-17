@@ -16,10 +16,31 @@ If you squash merge make sure your **git message aka Merge Request Title** start
 Once the branch was merged to master, semantics will create an incremented git tag.
 Additional the cross-compiled binaries for windows, darwin and linux will be uploaded to releases.
 
+### Class diagram
 
-<!--@startuml
-:Hello world;
-:This is on defined on
-several **lines** end of line;
-@enduml-->
-![](https://plantuml.signavio.com/png/UDeKny49W30C1T1xflZdZD0ku00k8EGN0o611dHzyVZ6mOZ2MpjioZXlRtYZ4iRbIKEbD1_kAw0QdcnLC0sry7FA5m00__yUtHQh)
+The following diagram describes the current program classes:
+
+<!-- @startuml
+class PlantUmlBlock{
+  {field} lineNumber int
+  {field} content string
+  {field} markdownLink string
+  {field} startNumber int
+}
+
+class PlantUmlFile{
+  {field} filePath string
+  {field} fileContent string
+  {field} updatedContent string
+  {field} blocks []PlantUmlBlock
+}
+
+class PlantUml{
+  {field} files  []PlantUmlFile
+  {field} ScanDirectory string
+  {field} Pattern string
+}
+PlantUml "1" *-- "many" PlantUmlFile : contains
+PlantUmlFile "1" *-- "many" PlantUmlBlock : contains
+@enduml -->
+![](https://plantuml.signavio.com/png/UDfqa35B134GXVlyYY6bS8MjfOgLo89OYSLSCgV3JYQIp277iVzTzk0WkR1jFjxBzoO8rWgJeDf7aaV9OJuxWFE1IU82maflnxId0gpMW93LI0sg5TRl1YGiSyn_-iewZxGQ5ciA5-TwWnSMQWKEB3IX_OnLAtdQiZZ-HZIActo_3gtm-TKj7tLkLIeqcTMruUy1zPaB1SlbD7uveHaLlOB5NMl0ttkus-t09zIJxqu13vTB8sjrtVj6vZAZ3Vq7003__w_-g8i=)
