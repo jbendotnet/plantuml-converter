@@ -23,3 +23,11 @@ Additional the cross-compiled binaries for windows, darwin and linux will be upl
 several **lines** end of line;
 @enduml-->
 ![](https://plantuml.signavio.com/png/UDeKny49W30C1T1xflZdZD0ku00k8EGN0o611dHzyVZ6mOZ2MpjioZXlRtYZ4iRbIKEbD1_kAw0QdcnLC0sry7FA5m00__yUtHQh)
+
+## Usage
+**Quicklinks**
+* [Official Documentation](https://plantuml.com)
+* [Extended Diagrams](https://crashedmind.github.io/PlantUMLHitchhikersGuide)
+* [Class Diagram](https://plantuml.com/class-diagram)
+* [Kubernetes examples](https://github.com/dcasati/kubernetes-PlantUML)
+* [AWS examples](https://crashedmind.github.io/PlantUMLHitchhikersGuide/aws/aws.html)
