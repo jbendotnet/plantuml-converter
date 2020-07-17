@@ -1,5 +1,19 @@
 # plantuml-converter
 
+The plantuml-converter will scan files and parse plantuml blocks and generate a link with the png representation of the diagram.
+For example adding this block to your Readme. ``<!-- .. -->`` will make sure that the content is not printed.
+```
+<!-- @startuml
+start
+:Hello world;
+:This is defined on
+several **lines**;
+stop
+@enduml -->
+![](https://plantuml.signavio.com/png/UDe4mC49W30C1T1xfiWv8xGBE80B5Fh5G6YaF-ZwFjRO9Ur0HEgNEsQNTjvETUh4vGjJSmdnOezGi_05cdLXvID_0000___ImHMY)
+```
+See also [pre-commit usage](#usage-with-pre-commit)
+
 ## Install
 Install from releases
 ```bash
@@ -124,3 +138,26 @@ Rel(acr, KubernetesApi, "Sync application")
 * [Class Diagram](https://plantuml.com/class-diagram)
 * [Kubernetes examples](https://github.com/dcasati/kubernetes-PlantUML)
 * [AWS examples](https://crashedmind.github.io/PlantUMLHitchhikersGuide/aws/aws.html)
+
+## Usage with pre-commit
+You can auto-generate links to the png representation of the diagram. 
+The tool will generate and update those links in Readme's.
+You can use pre-commit to automate that process before each commit.
+
+First add `.pre-commit-config.yaml` to your repository root with following content
+```
+repos:
+  - repo: https://github.com/signavio/plantuml-converter
+    rev: master
+    hooks:
+      - id: plantuml_coverter
+```
+Make sure you have installed [pre-commit](https://pre-commit.com/#install) and plantuml-converter see section [Install](#install).
+Install the hook
+```
+pre-commit install
+# optional to test the hook you can run
+pre-commit run -a
+```
+By default the tool will check all files with `*.md` extension.
+Now links will be generated before each commit.
