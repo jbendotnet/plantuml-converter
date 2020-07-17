@@ -115,3 +115,12 @@ Rel(svc, KubernetesBE2, " ")
 Rel(acr, KubernetesApi, "Sync application")
 @enduml -->
 ![](https://plantuml.signavio.com/png/UDgKbC5kuZmGn-z-Ygal1Ibj2lfEtmsotLsqRHSrxQrIvTf3i736aUr0sLNVVHMIGWAKtLuYUsP--S-CnvvP6z31Z_857M503rCZA5mytjumBuL1oCKh3Aw6_y5Agp1dVg6f44xaO3HXM1S8XJNhQjFoaLNeiO31LSle12qQ8sFi74Q_IeViJE5C4zQxQPaRc8TG-F_Zs8dLPQR3l7mfFJffAI25Isdp-5vBuPIzqrYWYJVanIRlnzkRsA51uJ4UNWnYfNrWx4oJDAN2qfcTJ8qbDiyjNHPbRaw5fJelZ9vfL7Ne1x69pOioOCsCYY95jzGIJ_q-iHI49dJ-FQ5cVu-Pzi6jJy5t65RMBJHbDNnZXHeB8qYYQn9bvwt3tJPxP_h7ZYifl0WwNcp1NSDpuGEw8xtkghJOvwfAV0s7jNsCd3o2FUndciOxqwZGVnNg4XFAFabChVeaaIvbKuYqng0Csf87dXYD53W83tAp54OBpvZ1MO1WmUbi7a1fLnFRUmJLx5b22fuT7wIUa2u2FdAPXUGBZu3pFZiOcvumBn7m9wgCJ_Hkhi8JGK89I9224uRtkxFLJY0nPJKIpsDRaX9ktPEr8GBU1ceZxyDl1W3GER5UPzS5HzD9atw5RJu7YkI_EalXcbG4VBE4Qr9RhQxUXBAUfioXzn7mYG_QmZSHS2NMBQ4tnZxI6WkvgAMgrGcbT2bxVYaZuBv-6vh_7mcTMjLgmlXw406lxrnke7fPqC6WbTvfUdY47dQAUsFi7aslDNKHrCFm_U5XcZQnLSZ6kklNlhlL-gfK3bLzbMDJ-7v9q507pc7Zh2MhsTqVYNHD4aHH62r5THbud_q9003__y4ALHi=)
+
+
+## Usage
+**Quicklinks**
+* [Official Documentation](https://plantuml.com)
+* [Extended Diagrams](https://crashedmind.github.io/PlantUMLHitchhikersGuide)
+* [Class Diagram](https://plantuml.com/class-diagram)
+* [Kubernetes examples](https://github.com/dcasati/kubernetes-PlantUML)
+* [AWS examples](https://crashedmind.github.io/PlantUMLHitchhikersGuide/aws/aws.html)
